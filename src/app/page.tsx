@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from "react"
-import Marquee, { Motion, randomIntFromInterval } from "react-marquee-slider"
 
 export default function Home() {
 	const THALA_NUMBER = 7
