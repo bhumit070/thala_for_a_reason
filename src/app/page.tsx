@@ -3,40 +3,57 @@ import { useState } from 'react';
 
 export default function Home() {
     const THALA_NUMBER = 7;
-    const [text, setText] = useState('');
+    const [text, setText] = useState<string>('');
+    const [thalaReason, setThalaReason] = useState<string>('Not a Thala');
 
-    function sumTheString(plainText: string): number {
-        const sum = plainText.split('').reduce((acc, curr) => {
-            const num = Number(curr);
-            if (num) {
-                return acc + num;
+    function sumTheString(
+        plainText: string,
+        _thalaReason: string = '',
+    ): { sum: number; _thalaReason: string } {
+        const sum = plainText.split('').reduce((acc, curr, index) => {
+            const num = Number(curr) || 0;
+            if (index === 0) {
+                _thalaReason += `${num} `;
+            } else {
+                _thalaReason += `+ ${num} `;
             }
-            return acc;
+            const sum = acc + num;
+            return sum;
         }, 0);
 
+        _thalaReason += `= ${sum}`;
+
         if (sum.toString().length > 1) {
-            return sumTheString(sum.toString());
+            _thalaReason += `<br />`;
+            return sumTheString(sum.toString(), _thalaReason);
         }
-        return sum;
+        return { sum, _thalaReason };
+    }
+
+    function setThalaReasonString(reason: string, isThala: boolean = false) {
+        if (isThala) {
+            reason += `<br /> <b> Thala for a reason </b>`;
+        } else {
+            reason += `<br /> <b><s> Not a Thala </s></b>`;
+        }
+        console.log({ reason, isThala });
+        setThalaReason(reason);
     }
 
     function checkForThala() {
-        const plainText = text.trim();
-        if (Number(plainText)) {
-            const sum = sumTheString(plainText);
-            console.log(sum);
-            if (sum === THALA_NUMBER) {
-                alert('Thala');
-            } else {
-                alert('Not Thala');
-            }
+        if (!text) {
             return;
         }
-        if (plainText.length === THALA_NUMBER) {
-            alert('Thala');
-        } else {
-            alert('Not Thala');
+        setThalaReason('');
+        const plainText = text.trim();
+        if (Number(plainText)) {
+            let { sum, _thalaReason } = sumTheString(plainText);
+            setThalaReasonString(_thalaReason, sum === THALA_NUMBER);
+            return;
         }
+        let textWithPlus = plainText.split('').join(' + ');
+        const _thalaReason = textWithPlus + ` = ${plainText.length}`;
+        setThalaReasonString(_thalaReason, plainText.length === THALA_NUMBER);
     }
 
     return (
@@ -62,6 +79,9 @@ export default function Home() {
                 >
                     Submit
                 </button>
+            </div>
+            <div className='text-white font-bold text-center'>
+                <span dangerouslySetInnerHTML={{ __html: thalaReason }}></span>
             </div>
         </div>
     );
