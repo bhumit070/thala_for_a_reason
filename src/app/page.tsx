@@ -12,10 +12,10 @@ export async function generateMetadata({
     if (!name) {
         return null;
     }
-
+    const titleAndDescription = `Is ${name} a Thala?`;
     return {
-        title: name,
-        description: `Is ${name} a Thala?`,
+        title: titleAndDescription,
+        description: titleAndDescription,
     };
 }
 
