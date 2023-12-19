@@ -59,7 +59,7 @@ export default function Home() {
     async function shareLink() {
         try {
             const base64Text = btoa(text);
-            const url = `window.location.origin?name${base64Text}`;
+            const url = `${window.location.origin}?name${base64Text}`;
             if (!navigator.canShare) {
                 await navigator.clipboard.writeText(url);
                 alert('Copied to clipboard');
