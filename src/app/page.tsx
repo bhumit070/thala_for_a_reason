@@ -78,6 +78,7 @@ export default function Home() {
             }
         } catch (error) {
             console.error(error);
+            alert(String(error));
         }
     }
 
