@@ -27,6 +27,17 @@ export async function generateMetadata({
                 url: 'https://www.linkedin.com/in/hardikmodi58677/',
             },
         ],
+        openGraph: {
+            title: titleAndDescription,
+            description: titleAndDescription,
+            type: 'website',
+            images: {
+                url: `https://placehold.co/1200x630?text=${titleAndDescription}`,
+                alt: titleAndDescription,
+                height: 630,
+                width: 1200,
+            },
+        },
     };
 }
 
