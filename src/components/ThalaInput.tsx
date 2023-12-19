@@ -81,7 +81,15 @@ export function ThalaInput({
                 }
             }
         } catch (error) {
-            toast.error(String(error), {
+            const errorMessage = String(error);
+            // this is because when we use navigator.share api and if we close share dialog it shows error.
+            if (
+                errorMessage ===
+                'AbortError: Abort due to cancellation of share.'
+            ) {
+                return;
+            }
+            toast.error(errorMessage, {
                 position: 'top-center',
             });
         }
