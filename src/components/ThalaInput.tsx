@@ -96,7 +96,10 @@ export function ThalaInput({
             return;
         }
         setThalaReason('');
-        const plainText = text.trim() || _text?.trim() || '';
+        const plainText = (text.trim() || _text?.trim() || '').replace(
+            /\s/g,
+            '',
+        );
         if (Number(plainText)) {
             let { sum, _thalaReason } = sumTheString(plainText);
             setThalaReasonString(_thalaReason, sum === THALA_NUMBER);
