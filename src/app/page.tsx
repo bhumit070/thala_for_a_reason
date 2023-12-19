@@ -56,6 +56,31 @@ export default function Home() {
         setThalaReasonString(_thalaReason, plainText.length === THALA_NUMBER);
     }
 
+    async function shareLink() {
+        try {
+            const base64Text = btoa(text);
+            const url = `window.location.origin?name${base64Text}`;
+            if (!navigator.canShare) {
+                await navigator.clipboard.writeText(url);
+                alert('Copied to clipboard');
+            } else {
+                const shareData: ShareData = {
+                    title: 'Thala Checker',
+                    text: url,
+                    url,
+                };
+                if (navigator.canShare(shareData)) {
+                    await navigator.share(shareData);
+                } else {
+                    await navigator.clipboard.writeText(text);
+                    alert('Copied to clipboard');
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className='h-screen'>
             <div className='flex flex-col justify-center items-center mt-56 pl-3 pr-3'>
@@ -80,8 +105,16 @@ export default function Home() {
                     Submit
                 </button>
             </div>
-            <div className='text-white font-bold text-center'>
+            <div className='text-white font-bold text-center text-2xl'>
                 <span dangerouslySetInnerHTML={{ __html: thalaReason }}></span>
+            </div>
+            <div className='text-center mt-3'>
+                <button
+                    onClick={shareLink}
+                    className='bg-purple-700 w-36 mt-2 rounded-3xl m-10 p-4 text-white font-bold'
+                >
+                    Share Link
+                </button>
             </div>
         </div>
     );
