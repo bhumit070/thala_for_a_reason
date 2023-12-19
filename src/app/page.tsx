@@ -16,6 +16,14 @@ export async function generateMetadata({
     return {
         title: titleAndDescription,
         description: titleAndDescription,
+        openGraph: {
+            images: {
+                url: `https://placehold.co/1200x630?text=${titleAndDescription}`,
+                height: 630,
+                width: 1200,
+                alt: titleAndDescription,
+            },
+        },
     };
 }
 
