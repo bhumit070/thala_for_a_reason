@@ -2,6 +2,8 @@
 import { ToastContainer, toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaGithubAlt } from 'react-icons/fa';
+import { IoVolumeMediumSharp, IoVolumeMute } from 'react-icons/io5';
 
 export function ThalaInput({
     searchParams,
@@ -180,12 +182,27 @@ export function ThalaInput({
                         Share Link
                     </button>
                 </div>
+                <div className='fixed bottom-16 right-4'>
+                    <button
+                        onClick={() => {
+                            window.location.href =
+                                'https://github.com/bhumit070/thala_for_a_reason';
+                        }}
+                        className='bg-black hover:bg-slate-500 text-white font-bold py-2 px-4 rounded-3xl'
+                    >
+                        <FaGithubAlt className='text-2xl' />
+                    </button>
+                </div>
                 <div className='fixed bottom-4 right-4'>
                     <button
                         onClick={() => setIsVideoMuted((state) => !state)}
-                        className='bg-purple-700 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded-3xl'
+                        className='bg-black hover:bg-slate-500 text-white font-bold py-2 px-4 rounded-3xl'
                     >
-                        {isVideoMuted ? 'Unmute' : 'Mute'} Video
+                        {isVideoMuted ? (
+                            <IoVolumeMute className='text-2xl' />
+                        ) : (
+                            <IoVolumeMediumSharp className='text-2xl' />
+                        )}
                     </button>
                 </div>
             </div>
